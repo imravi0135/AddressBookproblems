@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+
 namespace AddressBookProblems
 {
     class ContactDetails
@@ -23,13 +25,25 @@ namespace AddressBookProblems
             this.PhoneNumber = PhoneNumber;
             this.EmailId = EmailId;
         }
+        public string toString()
+        {
+            return " Details of " + FirstName + " " + LastName + " are: " + "Address: " + Address + " City: " + City + "\n"
+                                  + "                                   " + " State:   " + State + " Zipcode: " + Zipcode + "\n"
+                                  + "                                   " + "Phone Number:" + PhoneNumber + "\n"
+                                  + "                                   " + "EmailId: " + EmailId;
+        }
     }
     class Program
     {
-        public static void Main(string[] args)
+        private ArrayList contactDetailsList;
+        private Dictionary<string, ContactDetails> contactDetailsMap;
+        public Program()
         {
-            Console.WriteLine("Welcome To Address Book");
-
+            contactDetailsList = new ArrayList();
+            contactDetailsMap = new Dictionary<string, ContactDetails>();
+        }
+        public void AddDetails()
+        {
             Console.WriteLine("Enter Your First name");
             string FirstName = Console.ReadLine();
             Console.WriteLine("Enter Your Last name");
@@ -46,7 +60,53 @@ namespace AddressBookProblems
             int PhoneNumber = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter Your Email Id");
             string EmailId = Console.ReadLine();
+            ContactDetails contactDetails = new ContactDetails(FirstName, LastName, Address, City, State, Zipcode, PhoneNumber, EmailId);
+            contactDetailsList.Add(contactDetails);
+            contactDetailsMap.Add(FirstName, contactDetails);
+        }
+        public void ComputeDetails()
+        {
+            foreach (ContactDetails contact in contactDetailsList)
+            {
+                Console.WriteLine(contact.toString());
+            }
+        }
+
+        public static void Main(string[] args)
+        {
+            int option = 0;
+            Console.WriteLine("Welcome To Address Book");
+            Program details = new Program();
+            do
+            {
+                Console.WriteLine("1 : To Add a Contact Details");
+                Console.WriteLine("2: To Compute Details");
+
+                try
+                {
+                    option = int.Parse(Console.ReadLine());
+                    switch (option)
+                    {
+                        case 1:
+                            details.AddDetails();
+                            break;
+                        case 2:
+                            details.ComputeDetails();
+                            break;
+                        default:
+                            Console.WriteLine("Wrong key");
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Please choose option");
+                }
+            }
+            while (option != 0);
         }
     }
 }
+   
+
 
