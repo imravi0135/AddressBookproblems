@@ -64,6 +64,13 @@ namespace AddressBookProblems
             contactDetailsList.Add(contactDetails);
             contactDetailsMap.Add(FirstName, contactDetails);
         }
+        public void ComputeDetails()
+        {
+            foreach (ContactDetails contact in contactDetailsList)
+            {
+                Console.WriteLine(contact.toString());
+            }
+        }
         public void EditDetails(string key)
         {
             if (contactDetailsMap.ContainsKey(key))
@@ -93,12 +100,20 @@ namespace AddressBookProblems
                 Console.WriteLine("Key not found");
             }
         }
-        public void ComputeDetails()
+
+        public void DeleteContact()
         {
-            foreach (ContactDetails contact in contactDetailsList)
+            Console.WriteLine("Enter The Key to Delete Contact ");
+            string input = Console.ReadLine();
+            if (contactDetailsMap.ContainsKey(input.ToLower()))
             {
-                Console.WriteLine(contact.toString());
+                contactDetailsMap.Remove(input.ToLower());
             }
+            else
+            {
+                Console.WriteLine("Key not found");
+            }
+           
         }
 
         public static void Main(string[] args)
@@ -111,6 +126,7 @@ namespace AddressBookProblems
                 Console.WriteLine("1 : To Add a Contact Details");
                 Console.WriteLine("2: To Compute Details");
                 Console.WriteLine("3: To Edit Details");
+                Console.WriteLine("4: Delete Contact Details");
                 try
                 {
                     option = int.Parse(Console.ReadLine());
@@ -126,6 +142,9 @@ namespace AddressBookProblems
                             Console.WriteLine("Enter a First Name to Edit");
                             string key = Console.ReadLine();
                             details.EditDetails(key);
+                            break;
+                        case 4:
+                            details.DeleteContact();
                             break;
                         default:
                             Console.WriteLine("Wrong key");
